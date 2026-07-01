@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teach.mapper.TeachProjectInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.ruoyi.teach.domain.entity.TeachProjectInfo">
+        <id column="Id" property="id" />
+        <result column="PrjName" property="prjName" />
+        <result column="PrjCode" property="prjCode" />
+        <result column="PrjType" property="prjType" />
+        <result column="PrjStatus" property="prjStatus" />
+    </resultMap>
+
+    <!-- 分页列表查询（支持 prjCode 过滤） -->
+    <select id="selectProjectInfoList" resultMap="BaseResultMap">
+        select Id, PrjName, PrjCode, PrjType, PrjStatus
+        from project_info
+        <where>
+            <if test="prjName != null and prjName != ''">
+                and PrjName like concat('%', #{prjName}, '%')
+            </if>
+            <if test="prjCode != null and prjCode != ''">
+                and PrjCode like concat('%', #{prjCode}, '%')
+            </if>
+            <if test="prjStatus != null and prjStatus != ''">
+                and PrjStatus = #{prjStatus}
+            </if>
+        </where>
+        order by Id desc
+        limit #{offset}, #{pageSize}
+    </select>
+
+    <!-- 统计总数 -->
+    <select id="countProjectInfoList" resultType="long">
+        select count(*)
+        from project_info
+        <where>
+            <if test="prjName != null and prjName != ''">
+                and PrjName like concat('%', #{prjName}, '%')
+            </if>
+            <if test="prjCode != null and prjCode != ''">
+                and PrjCode like concat('%', #{prjCode}, '%')
+            </if>
+            <if test="prjStatus != null and prjStatus != ''">
+                and PrjStatus = #{prjStatus}
+            </if>
+        </where>
+    </select>
+
+    <!-- 其他增删改查保持不变 -->
+    <select id="selectProjectInfoById" resultMap="BaseResultMap">
+        select * from project_info where Id = #{id}
+    </select>
+
+    <insert id="insertProjectInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into project_info (PrjName, PrjCode, PrjType, PrjStatus)
+        values (#{prjName}, #{prjCode}, #{prjType}, #{prjStatus})
+    </insert>
+
+    <update id="updateProjectInfo">
+        update project_info
+        set PrjName = #{prjName},
+        PrjCode = #{prjCode},
+        PrjType = #{prjType},
+        PrjStatus = #{prjStatus}
+        where Id = #{id}
+    </update>
+
+    <delete id="deleteProjectInfoById">
+        delete from project_info where Id = #{id}
+    </delete>
+
+</mapper>
