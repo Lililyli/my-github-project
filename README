@@ -1,0 +1,195 @@
+# 科研项目信息管理模块
+
+> 基于若依（RuoYi）框架的科研项目信息管理模块，采用前后端分离架构。  
+> 中国计量大学 · 工程基础与创新设计B（032301）课程实践项目
+
+---
+
+## 📖 项目简介
+
+本项目是一个完整的**前后端分离**Web 应用，实现了科研项目信息的**增、删、改、查**功能，支持条件查询、分页展示、批量删除等特性。
+
+- **后端**：基于若依框架二次开发（Spring Boot + MyBatis）
+- **前端**：基于 Vue 3 + TypeScript + Element Plus
+- **数据库**：MySQL
+
+---
+
+## 🛠 技术栈
+
+### 后端
+| 技术 | 版本 | 说明 |
+|------|------|------|
+| Java | 8 | 编程语言 |
+| Spring Boot | - | 后端框架 |
+| MyBatis | - | ORM 框架 |
+| MySQL | - | 数据库 |
+| Lombok | - | 简化代码 |
+| 若依 RuoYi | - | 基础框架 |
+
+### 前端
+| 技术 | 版本 | 说明 |
+|------|------|------|
+| Vue | 3 | 前端框架 |
+| TypeScript | - | 类型系统 |
+| Element Plus | - | UI 组件库 |
+| Vite | - | 构建工具 |
+
+---
+
+## 📁 项目结构
+
+```
+my-github-project/
+├── ruoyi-teach/                        # 后端项目
+│   └── src/main/java/com/ruoyi/teach/
+│       ├── controller/
+│       │   └── ProjectController.java              # REST 控制器
+│       ├── domain/entity/
+│       │   └── TeachProjectInfo.java               # 实体类
+│       ├── service/
+│       │   ├── ITeachProjectInfoService.java       # 服务接口
+│       │   └── impl/
+│       │       └── TeachProjectInfoServiceImpl.java # 服务实现
+│       └── mapper/
+│           └── TeachProjectInfoMapper.java         # 数据映射
+│
+├── VueProjectFront/                    # 前端项目
+│   └── src/
+│       ├── api/research/
+│       │   └── project.ts                          # API 封装
+│       └── views/research/project/
+│           ├── index.vue                           # 列表页
+│           └── component/
+│               └── editModule.vue                  # 编辑弹窗
+│
+├── .gitignore                          # Git 忽略配置
+└── README.md                           # 项目说明
+```
+
+---
+
+## ✨ 核心功能
+
+- ✅ 科研项目信息列表展示
+- ✅ 按项目名称、编号进行模糊查询
+- ✅ 按项目状态进行筛选
+- ✅ 分页展示（支持自定义每页条数）
+- ✅ 新增科研项目
+- ✅ 修改项目信息
+- ✅ 单条删除 / 批量删除
+- ✅ 表单校验
+- ✅ 状态标签着色显示
+
+---
+
+## 🎨 界面截图
+
+### 项目列表页
+展示所有项目信息，支持条件查询与分页。
+
+### 新增/编辑弹窗
+表单方式录入或修改项目信息。
+
+---
+
+## 🚀 快速开始
+
+### 环境要求
+
+- JDK 1.8+
+- Maven 3.6+
+- Node.js 16+
+- MySQL 5.7+
+
+### 启动后端
+
+```bash
+cd ruoyi-teach
+mvn clean install
+mvn spring-boot:run
+```
+
+### 启动前端
+
+```bash
+cd VueProjectFront
+npm install
+npm run dev
+```
+
+访问：`http://localhost:8081`
+
+---
+
+## 📡 接口说明
+
+| 接口地址 | 请求方式 | 功能 |
+|---------|---------|------|
+| `/projectinfo/list` | GET | 分页查询项目列表 |
+| `/projectinfo/detail` | GET | 查询项目详情 |
+| `/projectinfo/add` | POST | 新增项目 |
+| `/projectinfo/update` | POST | 修改项目 |
+| `/projectinfo/delete` | POST | 删除项目 |
+
+### 统一返回格式
+
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": {
+    "rows": [...],
+    "total": 100
+  }
+}
+```
+
+---
+
+## 🗄️ 数据库表结构
+
+**表名：** `teach_project_info`
+
+| 字段名 | 类型 | 说明 |
+|--------|------|------|
+| id | INT | 主键，自增 |
+| prj_name | VARCHAR(100) | 项目名称 |
+| prj_code | VARCHAR(50) | 项目编号 |
+| prj_type | BIGINT | 项目类型（1横向 2纵向 3校内） |
+| prj_status | VARCHAR(20) | 项目状态（正常/已完成/延期/暂停） |
+
+---
+
+## 🏗️ 系统架构
+
+```
+┌─────────────────────────────────┐
+│   前端 (Vue 3 + Element Plus)   │
+│      VueProjectFront            │
+└─────────────────────────────────┘
+              ↕ HTTP / JSON
+┌─────────────────────────────────┐
+│  后端 (Spring Boot + MyBatis)   │
+│         ruoyi-teach             │
+│  Controller → Service → Mapper  │
+└─────────────────────────────────┘
+              ↕ SQL
+┌─────────────────────────────────┐
+│           MySQL                 │
+└─────────────────────────────────┘
+```
+
+---
+
+## 👤 作者
+
+- **学校**：中国计量大学
+- **课程**：工程基础与创新设计B
+- **课程编号**：032301
+
+---
+
+## 📝 说明
+
+本项目为课程作业，仅供学习交流使用。
